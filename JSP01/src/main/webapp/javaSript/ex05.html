@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	function formCheck(){
+		var id = document.joinform.id.value;
+		var pw = document.joinform.pw.value;
+		var pwcheck = document.joinform.pwcheck.value;
+		var name = document.joinform.name.value;
+	
+		if(id == "" || id == null){
+			alert("아이디는 필수사항 입니다.");
+			document.joinform.id.focus();
+			return
+		}
+		if(pw == "" || pw == null){
+			alert("비밀번호는 필수사항 입니다.");
+			document.joinform.id.focus();
+			return
+		}
+		if (pw != pwcheck){
+			alert("비밀번호와 비밀번호 확인과 일치하지 않습니다.")
+			document.joinform.pwcheck.focus();
+			return
+		}
+		if(name == "" || name == null){
+			alert("이름은 필수사항 입니다.");
+			document.joinform.name.focus();
+			return
+		}
+		
+		document.joinform.submit();
+		//유효성 검사 후에 자바스크립트에서 서버로 데이터 전송하기
+		
+		
+	}
+
+
+
+</script>
+
+</head>
+<body>
+	
+	<!--  회원가입 양식 만들기
+		아이디 비밀번호 비밀번호확인 이름 성별 전화번호 -->
+		
+	<h1> 회원가입</h1>
+	<form action = "#" name= "joinform">
+	아이디 : <input type="text" name="id" size="10"><br>
+	비밀번호 : <input type="password" name="pw" size="10"><br>
+	비밀번호 확인 : <input type="password" name="pwcheck" size="10"><br>
+	이름 : <input type="text" name="name" size="10"><br>
+	성별 : <label><input type="radio" name="gender" value  = "man"> 남자</label>
+	<label><input type= "radio" name="gender" value= "woman"> 여자<br></label>
+	전화번호 : <input type="text" name="tel" size="15"><br>
+	<input type = "button" onclick ="formCheck()" value = "회원가입">
+	</form>
+	
+
+</body>
+</html>
