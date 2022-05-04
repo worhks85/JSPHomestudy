@@ -56,6 +56,7 @@ private membersDAO() {}
 	}
 	
 	// members 테이블에 같은 아이디가 있는지 확인하는 메소드
+	// 같은 아이디가 있다면 1반환, 같은 아이디가 없다면 0 
 	public int confirmID(String id) {
 		int res = 0;
 		String query = "SELECT * FROM members where id = ?";
@@ -63,13 +64,17 @@ private membersDAO() {}
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
-			
-					
+			rs = pstmt.executeQuery();
+			if ( rs.next()) {
+				res =1;
+			}
 		} catch (Exception e) {
 			e.getStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
 		}
-		
-		
 		return res;
 	}
 	
@@ -78,9 +83,28 @@ private membersDAO() {}
 	// 존재하고 비밀번호가 맞다면 1
 	public int userCheck(String id ,String pw) {
 		int res = 0;
-
-		
-		
+		String dbpw = "";
+		String query = "SELECT pw FROM members where id = ? ";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,id);
+			rs = pstmt.executeQuery();
+			
+			if ( rs.next()) {
+				dbpw = rs.getString("pw");
+				if( dbpw.equals(pw)) {
+					res = 1;
+				}else res=0;
+				
+			}else res= -1;
+		} catch (Exception e) {
+			e.getStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
 		return res;
 	}
 	
@@ -88,29 +112,52 @@ private membersDAO() {}
 	// DTO객체에 셋팅 하고 DTO 객체 리턴해주는 메소드
 	public membersDTO getMember(String id) {
 		membersDTO dto = null;
-		
-		
-		
+		String query = "SELECT * FROM members where id = ? ";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String pw = rs.getString("pw");
+				String name = rs.getString("name");
+				String email= rs.getString("email");
+				Timestamp regdate = rs.getTimestamp("regdate");
+				String address= rs.getString("address");
+				dto = new membersDTO(id, pw, name, email, regdate , address);
+				
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
 		return dto;
 	}
 	// DTO 객체를 매개값으로 받아 회원의 정보를 (pw,email,address)를 수정해주는 메소드
 	public int updateMember(membersDTO dto) {
 		int res = 0;
-		
+		String query = "UPDATE members set pw = ? , email = ? , address= ? where id = ?";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dto.getPw());
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getAddress());
+			res = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.getStackTrace();
+		}finally {
+			close(pstmt);
+			close(conn);
+		}
 		
 		
 		return res;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	
 
 	private void close(PreparedStatement pstmt) {

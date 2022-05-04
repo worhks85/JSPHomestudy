@@ -7,7 +7,7 @@ public class membersDTO {
 	private String id,pw,name,email,address;
 	private Timestamp regDate;
 	public membersDTO() {}
-	public membersDTO(String id, String pw, String name, String email, String address, Timestamp regDate) {
+	public membersDTO(String id, String pw, String name, String email, Timestamp regDate,String address) {
 		super();
 		this.id = id;
 		this.pw = pw;
