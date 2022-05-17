@@ -40,8 +40,9 @@
  	System.out.println(dto.getPw());
  	System.out.println(dto.getRegDate());
  	membersDAO dao = membersDAO.getInstance();
+ 	
  	if(dao.confirmID(dto.getId()) == 1 ){
- 		// 아이디를 체크해서 같으 아이디가 있다면
+ 		// 아이디를 체크해서 같은 아이디가 있다면
  		%>
  		<script>
  		alert('아이디가 중복됩니다.');
