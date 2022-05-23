@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h2>get 방식</h2>
+	
+	<!-- 
+		get 방식은 url에 정보가 담겨져 보안에 약하다
+	 -->
+	
+	<form action="http://localhost:8090/JSP02/Servlet02" method="get">
+		아이디 : <input type="text" name="id" size="10"><br>
+		비밀번호 : <input type="text" name="pw" size="10"><br>
+		<input type="submit" value="get">
+	</form>
+	
+	
+	<h2>post 방식</h2>
+	
+	<!-- 
+		post 방식은 url에 정보가 담겨져 있지않아 보안에 강하다.
+	 -->
+	
+	<form action="Servlet02" method="post">
+		아이디 : <input type="text" name="id" size="10"><br>
+		비밀번호 : <input type="text" name="pw" size="10"><br>
+		<input type="submit" value="post">
+	</form>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
